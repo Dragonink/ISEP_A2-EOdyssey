@@ -46,7 +46,7 @@ public class MarkerRepositoryController {
 			.orElseGet(() -> repository.findAll());
 	}
 
-	@PostMapping
+	@PostMapping(consumes = {"multipart/form-data"})
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody Marker add(
 		@RequestParam("title") String title,

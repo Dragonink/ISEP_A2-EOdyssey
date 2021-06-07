@@ -1,12 +1,25 @@
-const MAP = L.map('map').setView([48.82461184925993, 2.279912667672016], 13);
+const MAP = L.map('map').setView([48.82461184925993, 2.279912667672016], 13)
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(MAP);
+
+MAP.on('contextmenu', 
+	function(e){
+		/** @type {HTMLFormElement} */
+		const form = document.querySelector("form#new-marker-form");
+		form.elements.namedItem("latitude").value = e.latlng.lat;
+		form.elements.namedItem("longitude").value = e.latlng.lng;
+		SIDEBAR.enablePanel("new-marker");
+		SIDEBAR.open("new-marker");
+	}
+);
 
 const SIDEBAR = L.control.sidebar({
 	container: 'sidebar',
 	closeButton: false,
 }).addTo(MAP);
+SIDEBAR.disablePanel("new-marker");
 
 const ICONS = ["blue", "gold", "red", "green", "orange", "yellow", "violet", "grey", "black"].reduce((obj, color) => {
 	obj[color] = L.icon({
@@ -34,6 +47,16 @@ function displayMarkerDetails(marker) {
 	SIDEBAR.open("marker-details");
 }
 
+function addMarker(marker){
+	L.marker([marker.latitude, marker.longitude], {
+		id: marker.id,
+		title: marker.title,
+		icon: ICONS["blue"],
+	})
+		.addTo(MAP)
+		.on("click", _event => displayMarkerDetails(marker));
+}
+
 fetch("/api/markers")
 	.then(response => {
 		if (response.ok) {
@@ -42,15 +65,7 @@ fetch("/api/markers")
 			throw response;
 		}
 	})
-	.then(markers => markers.forEach(marker => {
-		L.marker([marker.latitude, marker.longitude], {
-			id: marker.id,
-			title: marker.title,
-			icon: ICONS["blue"],
-		})
-			.addTo(MAP)
-			.on("click", _event => displayMarkerDetails(marker));
-	}))
+	.then(markers => markers.forEach(marker => addMarker(marker)))
 	.catch(console.error);
 
 ((/** @type {HTMLFormElement} */ form) => {
@@ -85,3 +100,27 @@ fetch("/api/markers")
 			.catch(console.error);
 	};
 })(document.querySelector("form#search-form"));
+
+((/** @type {HTMLFormElement} */ form) => {
+	form.onsubmit = event => {
+		event.preventDefault();
+		fetch(form.action,{
+			method: "POST",
+			body: new FormData(form)
+		})
+			.then(response => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw response;
+				}
+			})
+			.then(marker => {
+				addMarker(marker);
+				SIDEBAR.close("new-marker");
+				SIDEBAR.disablePanel("new-marker");
+				displayMarkerDetails(marker);
+			})
+			.catch(alert);
+	};
+})(document.querySelector("form#new-marker-form"));

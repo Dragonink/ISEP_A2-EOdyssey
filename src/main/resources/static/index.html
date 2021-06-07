@@ -20,12 +20,13 @@
 			<ul role="tablist">
 				<li><a href="#search" role="tab">&#128269;</a></li>
 				<li><a href="#marker-details" role="tab" style="font-size: x-large;">&#128462;</a></li>
+				<li><a href="#new-marker" role="tab" style="font-size: x-large;">&#128463;</a></li>
 			</ul>
 		</div>
 		<div class="leaflet-sidebar-content">
 			<div class="leaflet-sidebar-pane" id="search">
 				<form id="search-form" method="GET" action="/api/markers/search">
-					<input type="text" name="query" placeholder="Search among markers" required />
+					<input type="search" name="query" placeholder="Search among markers" required />
 				</form>
 				<output form="search-form">
 					<ul></ul>
@@ -36,6 +37,15 @@
 					<h1>No marker selected</h1>
 					<p>Please select a marker to display its details here</p>
 				</article>
+			</div>
+			<div class="leaflet-sidebar-pane" id="new-marker">
+				<form id="new-marker-form" method="POST" action="/api/markers">
+					<input type="number" name="latitude" placeholder="latitude" readonly>
+					<input type="number" name="longitude" placeholder="longitude" readonly>
+					<input type="text" name="title" placeholder="title" required>
+					<textarea name="content" placeholder="contento" spellcheck="true"></textarea>
+					<button type="submit">Create marker</button>
+				</form>
 			</div>
 		</div>
 	</div>
