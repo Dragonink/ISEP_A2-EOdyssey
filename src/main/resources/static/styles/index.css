@@ -23,6 +23,7 @@ legend {
 	font-size: large;
 }
 
+
 input {
 	font-size: large;
 	width: 97%;
@@ -66,70 +67,35 @@ output[form="search-form"]>ul>li {
 	list-style: none;
 }
 output[form="search-form"]>ul>li>button {
-	text-align: left;
-	background-color: transparent;
-	cursor: pointer;
-	width: 100%;
-	padding: 4px;
-	border: none;
-	border-radius: 3px;
+	text-align: left !important;
+	background-color: transparent !important;
+	cursor: pointer !important;
+	width: 100% !important;
+	padding: 4px !important;
+	border: none !important;
+	border-radius: 3px !important;
+	color: black !important;
 }
 output[form="search-form"]>ul>li>button:hover {
-	background-color: #8884;
+	background-color: #8884 !important;
 }
 
-
-/* Nico Bouton*/
-
-.noselect {
-  -webkit-touch-callout: none;
-    -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-		-webkit-tap-highlight-color: transparent;
-}
 
 button {
-	width: 150px;
-	height: 50px;
-	cursor: pointer;
-	border: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: #7f5a83;
-	background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
-	background-size: 200% 100%;
-	background-position: left;
-	background-repeat: no-repeat;
-	transition: 500ms;
-}
-
-button:before {
-	content: 'Create marker';
-	color: rgba(255,255,255,0.5);
-	font-size: 16px;
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 140px;
-	height: 40px;
-	background-color: #1b2845;
-	background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
-	transition: 500ms;
+    color: #bf2020 ;
+	text-transform: uppercase;
+	background: #ffffff;
+	padding: 20px;
+	border: 4px solid #bf2020;
+	border-radius: 6px;
+	display: inline-block;
+	transition: all 0.3s ease 0s;
 }
 
 button:hover {
-	background-position: right;
-}
-
-button:hover:before {
-	color: rgba(255,255,255,0.8);
-}
-
-button:focus {
-	outline: none;
+	color: #494949;
+	border-radius: 50px;
+	border-color: #494949;
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
 }
