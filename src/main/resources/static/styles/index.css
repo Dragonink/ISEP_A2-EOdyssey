@@ -9,3 +9,33 @@ div#map {
 	width: 100vw;
 	height: 100vh;
 }
+
+form#search-form {
+	display: flex;
+	width: 100%;
+}
+form#search-form>input[name="query"] {
+	flex: 1 0 auto;
+	padding: 6px 2px;
+	border: none;
+	border-bottom: 1px solid #0004;
+}
+
+output[form="search-form"]>ul {
+	padding: 0;
+}
+output[form="search-form"]>ul>li {
+	list-style: none;
+}
+output[form="search-form"]>ul>li>button {
+	text-align: left;
+	background-color: transparent;
+	cursor: pointer;
+	width: 100%;
+	padding: 4px;
+	border: none;
+	border-radius: 3px;
+}
+output[form="search-form"]>ul>li>button:hover {
+	background-color: #8884;
+}

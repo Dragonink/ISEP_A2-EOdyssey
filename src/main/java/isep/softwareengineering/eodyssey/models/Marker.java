@@ -13,6 +13,8 @@ public class Marker {
 		return id;
 	}
 
+	public String title;
+
 	public double latitude;
 
 	public double longitude;
@@ -20,7 +22,8 @@ public class Marker {
 	public String content;
 
 	Marker() {}
-	public Marker(double latitude, double longitude, String content) {
+	public Marker(String title, double latitude, double longitude, String content) {
+		this.title = title;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.content = content;
