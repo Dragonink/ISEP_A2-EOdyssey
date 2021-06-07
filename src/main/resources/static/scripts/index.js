@@ -8,6 +8,32 @@ const SIDEBAR = L.control.sidebar({
 	closeButton: false,
 }).addTo(MAP);
 
+const ICONS = ["blue", "gold", "red", "green", "orange", "yellow", "violet", "grey", "black"].reduce((obj, color) => {
+	obj[color] = L.icon({
+		iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+		iconSize: [25, 41],
+		iconAnchor: [12, 41],
+	});
+	return obj;
+}, {});
+
+let selectedMarker = null;
+function displayMarkerDetails(marker) {
+	document.querySelector("article").innerHTML = `<h1>${marker.title}</h1><p>${marker.content}</p>`;
+	MAP.eachLayer(layer => {
+		if (layer.options && layer.options.id) {
+			if (layer.options.id === selectedMarker) {
+				layer.setIcon(ICONS["blue"]);
+			}
+			if (layer.options.id === marker.id) {
+				layer.setIcon(ICONS["red"]);
+			}
+		}
+	});
+	selectedMarker = marker.id;
+	SIDEBAR.open("marker-details");
+}
+
 fetch("/api/markers")
 	.then(response => {
 		if (response.ok) {
@@ -17,9 +43,13 @@ fetch("/api/markers")
 		}
 	})
 	.then(markers => markers.forEach(marker => {
-		L.marker([marker.latitude, marker.longitude])
+		L.marker([marker.latitude, marker.longitude], {
+			id: marker.id,
+			title: marker.title,
+			icon: ICONS["blue"],
+		})
 			.addTo(MAP)
-			.bindPopup(marker.content);
+			.on("click", _event => displayMarkerDetails(marker));
 	}))
 	.catch(console.error);
 
@@ -43,8 +73,11 @@ fetch("/api/markers")
 				markers.forEach(marker => {
 					const li = document.createElement("li");
 					const button = document.createElement("button");
-					button.textContent = marker.content;
-					button.onclick = _event => void MAP.flyTo([marker.latitude, marker.longitude], 14);
+					button.textContent = marker.title;
+					button.onclick = _event => {
+						MAP.flyTo([marker.latitude, marker.longitude], 14);
+						displayMarkerDetails(marker);
+					};
 					li.appendChild(button);
 					output.appendChild(li);
 				});
