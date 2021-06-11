@@ -1,14 +1,14 @@
 (() => {
-	const USER_PROPERTIES = ["username"];
+	const USER_PROPERTIES = ["id", "username"];
 	function checkUserProperties() {
-		return decodeURIComponent(document.cookie)
+		const userProperties = decodeURIComponent(document.cookie)
 			.split("; ")
 			.map(cookie => cookie.split("=")[0])
-			.filter(cookie => /^user_/.test(cookie))
-			.every(cookie => {
-				const value = cookie.split("=")[1];
-				return value && value !== "";
-			});
+			.filter(cookie => /^user_/.test(cookie));
+		return userProperties.length > 0 && userProperties.every(cookie => {
+			const value = cookie.split("=")[1];
+			return value && value !== "";
+		});
 	}
 	function getUserProperty(property) {
 		return decodeURIComponent(document.cookie)
@@ -33,6 +33,31 @@
 			profile.hidden = true;
 			clearSession();
 			forms.hidden = false;
+		};
+		/** @type {HTMLFormElement} */
+		const editProfileForm = profile.querySelector("form#edit-profile-form");
+		const editProfileOutput = editProfileForm.querySelector("output");
+		editProfileForm.onsubmit = event => {
+			event.preventDefault();
+			editProfileOutput.hidden = true;
+			fetch(editProfileForm.action + getUserProperty("id"), {
+				method: "PATCH",
+				body: new FormData(editProfileForm),
+			})
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					} else {
+						throw response;
+					}
+				})
+				.then(setupSession)
+				.catch(error => {
+					if (error) {
+						console.error(error);
+					}
+					editProfileOutput.hidden = false;
+				});
 		};
 		profile.hidden = false;
 	}

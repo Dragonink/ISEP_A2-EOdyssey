@@ -41,6 +41,7 @@
 					<p>Please select a marker to display its details here</p>
 				</article>
 			</div>
+
 			<div class="leaflet-sidebar-pane" id="new-marker">
 				<form id="new-marker-form" method="POST" action="/api/markers">
 					<fieldset id="fieldset1">
@@ -68,40 +69,51 @@
 					<br>
 					<button type="submit">Create marker</button>
 				</form>
+			</div>
 
-				<div class="leaflet-sidebar-pane" id="user">
-					<div id="unknown-user">
-						<form id="signin-form" method="POST" action="/api/users/signin">
-							<h1>Sign in</h1>
-							<input type="text" name="username" autocomplete="username" required />
-							<input type="password" name="password" autocomplete="current-password" required />
-							<button type="submit">Sign in</button>
-							<output hidden class="error">
-								<b>Authentication failed.</b>
-								You may try again.
-							</output>
-						</form>
-						<hr />
-						<form id="signup-form" action="/api/users/signup">
-							<h1>Sign up</h1>
-							<input type="text" name="username" required />
-							<input type="password" name="password" autocomplete="new-password" required />
-							<button type="submit">Sign up</button>
-							<output hidden class="error">
-								<b>Something went wrong.</b>
-								Please try again later.
-							</output>
-						</form>
-					</div>
-					<div id="logged-user" hidden>
-						<header>
-							<h1 id="username" data-value="">Hello </h1>
-							<button id="signout" title="Sign out">&#9211;</button>
-						</header>
-					</div>
+			<div class="leaflet-sidebar-pane" id="user">
+				<div id="unknown-user">
+					<form id="signin-form" method="POST" action="/api/users/signin">
+						<h1>Sign in</h1>
+						<input type="text" name="username" autocomplete="username" required placeholder="Username" />
+						<input type="password" name="password" autocomplete="current-password" required placeholder="Password" />
+						<button type="submit">Sign in</button>
+						<output hidden class="error">
+							<b>Authentication failed.</b>
+							You may try again.
+						</output>
+					</form>
+					<hr />
+					<form id="signup-form" action="/api/users/signup">
+						<h1>Sign up</h1>
+						<input type="text" name="username" required placeholder="Username" />
+						<input type="password" name="password" autocomplete="new-password" required placeholder="Password" />
+						<button type="submit">Sign up</button>
+						<output hidden class="error">
+							<b>Something went wrong.</b>
+							Please try again later.
+						</output>
+					</form>
+				</div>
+				<div id="logged-user" hidden>
+					<header>
+						<h1 id="username" data-value="">Hello </h1>
+						<button id="signout" title="Sign out">&#9211;</button>
+					</header>
+					<hr />
+					<form id="edit-profile-form" action="/api/users/">
+						<h2>Edit your information</h2>
+						<input type="text" name="username" placeholder="Username" />
+						<input type="password" name="new-password" autocomplete="new-password" placeholder="New password" />
+						<input type="password" name="current-password" autocomplete="current-password" required placeholder="Old password" />
+						<button type="submit">Save</button>
+						<output hidden class="error">
+							<b>Something went wrong.</b>
+							Maybe you typed your old password wrong.
+						</output>
+					</form>
 				</div>
 			</div>
-		</div>
 </body>
 
 </html>

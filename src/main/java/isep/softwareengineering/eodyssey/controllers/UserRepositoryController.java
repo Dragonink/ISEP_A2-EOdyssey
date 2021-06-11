@@ -41,9 +41,9 @@ public class UserRepositoryController {
 	@PatchMapping(path = "/{id}", consumes = {"multipart/form-data"})
 	public @ResponseBody Optional<User> patch(
 		@PathVariable("id") long id,
-		@RequestParam("password") String oldPassword,
+		@RequestParam("current-password") String oldPassword,
 		@RequestParam("username") Optional<String> username,
-		@RequestParam("password") Optional<String> password
+		@RequestParam("new-password") Optional<String> password
 	) {
 		return repository.findById(id).map(user -> {
 			if (user.checkPassword(oldPassword)) {
