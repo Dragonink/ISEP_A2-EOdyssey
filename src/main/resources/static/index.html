@@ -11,6 +11,7 @@
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin></script>
 	<script src="https://noerw.github.io/leaflet-sidebar-v2/js/leaflet-sidebar.min.js" crossorigin></script>
 	<script type="application/javascript" src="/scripts/index.js" defer></script>
+	<script type="application/javascript" src="/scripts/authentication.js" defer></script>
 </head>
 
 <body>
@@ -21,6 +22,7 @@
 				<li><a href="#search" role="tab">&#128269;</a></li>
 				<li><a href="#marker-details" role="tab" style="font-size: x-large;">&#128462;</a></li>
 				<li><a href="#new-marker" role="tab" style="font-size: x-large;">&#128463;</a></li>
+				<li><a href="#user" role="tab" title="Profile">&#128100;</a></li>
 			</ul>
 		</div>
 		<div class="leaflet-sidebar-content">
@@ -32,17 +34,19 @@
 					<ul></ul>
 				</output>
 			</div>
+
 			<div class="leaflet-sidebar-pane" id="marker-details">
 				<article>
 					<h1>No marker selected</h1>
 					<p>Please select a marker to display its details here</p>
 				</article>
 			</div>
+
 			<div class="leaflet-sidebar-pane" id="new-marker">
 				<form id="new-marker-form" method="POST" action="/api/markers">
 					<fieldset id="fieldset1">
 						<legend id="legend1"><b>Coordinates</b> </legend>
-							
+
 						<label for="latitude">Latitude: </label>
 						<input type="number" name="latitude" placeholder="latitude" readonly>
 
@@ -66,8 +70,50 @@
 					<button type="submit">Create marker</button>
 				</form>
 			</div>
-		</div>
-	</div>
+
+			<div class="leaflet-sidebar-pane" id="user">
+				<div id="unknown-user">
+					<form id="signin-form" method="POST" action="/api/users/signin">
+						<h1>Sign in</h1>
+						<input type="text" name="username" autocomplete="username" required placeholder="Username" />
+						<input type="password" name="password" autocomplete="current-password" required placeholder="Password" />
+						<button type="submit">Sign in</button>
+						<output hidden class="error">
+							<b>Authentication failed.</b>
+							You may try again.
+						</output>
+					</form>
+					<hr />
+					<form id="signup-form" action="/api/users/signup">
+						<h1>Sign up</h1>
+						<input type="text" name="username" required placeholder="Username" />
+						<input type="password" name="password" autocomplete="new-password" required placeholder="Password" />
+						<button type="submit">Sign up</button>
+						<output hidden class="error">
+							<b>Something went wrong.</b>
+							Please try again later.
+						</output>
+					</form>
+				</div>
+				<div id="logged-user" hidden>
+					<header>
+						<h1 id="username" data-value="">Hello </h1>
+						<button id="signout" title="Sign out">&#9211;</button>
+					</header>
+					<hr />
+					<form id="edit-profile-form" action="/api/users/">
+						<h2>Edit your information</h2>
+						<input type="text" name="username" placeholder="Username" />
+						<input type="password" name="new-password" autocomplete="new-password" placeholder="New password" />
+						<input type="password" name="current-password" autocomplete="current-password" required placeholder="Old password" />
+						<button type="submit">Save</button>
+						<output hidden class="error">
+							<b>Something went wrong.</b>
+							Maybe you typed your old password wrong.
+						</output>
+					</form>
+				</div>
+			</div>
 </body>
 
 </html>

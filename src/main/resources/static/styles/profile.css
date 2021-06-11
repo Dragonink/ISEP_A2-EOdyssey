@@ -1,0 +1,35 @@
+form>output.error {
+	display: block;
+	background-color: red;
+	color: white;
+	width: 100%;
+	padding: 4px;
+	border-radius: 3px;
+	margin: 4px 0;
+}
+form>output.error[hidden] {
+	display: none;
+}
+
+div#logged-user>header {
+	display: flex;
+}
+
+div#logged-user h1#username {
+	flex: 1 0 auto;
+	font-weight: normal;
+	margin: 0;
+}
+div#logged-user h1#username::after {
+	content: attr(data-value);
+	font-weight: bold;
+}
+
+div#logged-user button#signout {
+	flex: 0 0 auto;
+	cursor: pointer;
+	font-size: x-large;
+	background-color: transparent;
+	color: red;
+	border: none;
+}
