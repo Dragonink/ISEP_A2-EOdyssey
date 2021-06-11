@@ -35,7 +35,9 @@ public class UserRepositoryController {
 		@RequestParam("password") String password
 	) {
 		return repository.findByUsername(username)
-			.map(user -> user.checkPassword(password) ? user : null);
+			.map(user -> {
+				return user.checkPassword(password) ? user : null;
+			});
 	}
 
 	@PatchMapping(path = "/{id}", consumes = {"multipart/form-data"})
@@ -47,8 +49,12 @@ public class UserRepositoryController {
 	) {
 		return repository.findById(id).map(user -> {
 			if (user.checkPassword(oldPassword)) {
-				username.ifPresent(value -> user.username = value);
-				password.ifPresent(user::setPassword);
+				username
+					.map(value -> value.length() > 0 ? value : null)
+					.ifPresent(value -> user.username = value);
+				password
+					.map(value -> value.length() > 0 ? value : null)
+					.ifPresent(user::setPassword);
 				return repository.save(user);
 			} else {
 				return null;

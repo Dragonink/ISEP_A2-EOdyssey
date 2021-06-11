@@ -84,6 +84,13 @@
 						throw response;
 					}
 				})
+				.then(user => {
+					if (user) {
+						return user;
+					} else {
+						throw TypeError("Fetched null user");
+					}
+				})
 				.then(setupSession)
 				.catch(error => {
 					if (error) {

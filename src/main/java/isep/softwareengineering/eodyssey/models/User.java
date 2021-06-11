@@ -22,21 +22,20 @@ public class User {
 
 	@Column(nullable = false)
 	private String password;
-	public boolean checkPassword(String password) {
+	public static String encryptPassword(String password) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			digest.update(password.getBytes());
-			return this.password.equals(new String(digest.digest()));
+			return new String(digest.digest());
 		} catch (NoSuchAlgorithmException error) {
-			return false;
+			return null;
 		}
 	}
+	public boolean checkPassword(String password) {
+		return encryptPassword(password).equals(this.password);
+	}
 	public void setPassword(String password) {
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			digest.update(password.getBytes());
-			this.password = new String(digest.digest());
-		} catch (NoSuchAlgorithmException error) {}
+		this.password = encryptPassword(password);
 	}
 
 	User() {}
