@@ -14,11 +14,50 @@ form#search-form {
 	display: flex;
 	width: 100%;
 }
-form#search-form>input[name="query"] {
-	flex: 1 0 auto;
-	padding: 6px 2px;
+
+label {
+	font-size: large;
+}
+
+legend {
+	font-size: large;
+}
+
+
+input {
+	font-size: large;
+	width: 97%;
+}
+
+textarea{
+	font-size: large;
+	width: 97%;	
+}
+
+form#form-coord {
+	display: flex;
+	width: 100%;
+}
+
+form#title>input[type="text"] {
+	padding: 6px 3px;
+	font-size: large;
+}
+
+input[type="number"] {
+	border: none;
+	font-size: large;
+}
+
+input[type="search"] {
+	padding: 6px 3px;
 	border: none;
 	border-bottom: 1px solid #0004;
+	font-size: large;
+}
+
+form#search-form>input[name="query"] {
+	flex: 1 0 auto;
 }
 
 output[form="search-form"]>ul {
@@ -35,6 +74,7 @@ output[form="search-form"]>ul>li>button {
 	padding: 4px;
 	border: none;
 	border-radius: 3px;
+	color: black;
 }
 output[form="search-form"]>ul>li>button:hover {
 	background-color: #8884;
