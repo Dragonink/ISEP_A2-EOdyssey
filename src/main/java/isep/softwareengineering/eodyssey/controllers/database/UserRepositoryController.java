@@ -1,4 +1,4 @@
-package isep.softwareengineering.eodyssey.controllers;
+package isep.softwareengineering.eodyssey.controllers.database;
 
 import java.util.Optional;
 

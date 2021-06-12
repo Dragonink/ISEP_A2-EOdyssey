@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Marker {
@@ -24,6 +25,9 @@ public class Marker {
 	public double longitude;
 
 	public String content;
+
+	@Transient
+	public boolean hasMeeting = false;
 
 	Marker() {}
 	public Marker(String title, double latitude, double longitude, String content) {

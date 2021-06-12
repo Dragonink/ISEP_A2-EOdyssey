@@ -1,4 +1,4 @@
-package isep.softwareengineering.eodyssey.controllers;
+package isep.softwareengineering.eodyssey.controllers.database;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +45,13 @@ public class MarkerRepositoryController {
 				return iter;
 			})
 			.orElseGet(() -> repository.findAll());
+	}
+
+	@GetMapping(path = "/{id}")
+	public @ResponseBody Optional<Marker> getById(
+		@PathVariable("id") long id
+	) {
+		return repository.findById(id);
 	}
 
 	@PostMapping(consumes = {"multipart/form-data"})
