@@ -1,11 +1,11 @@
-const MAP = L.map('map').setView([48.82461184925993, 2.279912667672016], 13)
+const MAP = L.map('map').setView([48.82461184925993, 2.279912667672016], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(MAP);
 
-MAP.on('contextmenu', 
-	function(e){
+MAP.on('contextmenu',
+	function (e) {
 		/** @type {HTMLFormElement} */
 		const form = document.querySelector("form#new-marker-form");
 		form.elements.namedItem("latitude").value = e.latlng.lat;
@@ -19,7 +19,7 @@ const SIDEBAR = L.control.sidebar({
 	container: 'sidebar',
 	closeButton: false,
 }).addTo(MAP);
-SIDEBAR.disablePanel("new-marker");
+["new-marker", "meeting"].forEach(panel => SIDEBAR.disablePanel(panel));
 
 const ICONS = ["blue", "gold", "red", "green", "orange", "yellow", "violet", "grey", "black"].reduce((obj, color) => {
 	obj[color] = L.icon({
@@ -32,7 +32,7 @@ const ICONS = ["blue", "gold", "red", "green", "orange", "yellow", "violet", "gr
 
 let selectedMarker = null;
 function displayMarkerDetails(marker) {
-	document.querySelector("article").innerHTML = `<h1>${marker.title}</h1><p>${marker.content}</p>`;
+	document.querySelector("div#marker-details>article").innerHTML = `<h1>${marker.title}</h1><p>${marker.content}</p>`;
 	MAP.eachLayer(layer => {
 		if (layer.options && layer.options.id) {
 			if (layer.options.id === selectedMarker) {
@@ -43,11 +43,14 @@ function displayMarkerDetails(marker) {
 			}
 		}
 	});
+	/** @type {HTMLButtonElement} */
+	const button = document.querySelector("button#join-meeting");
+	button.onclick = _event => openMeeting(marker);
 	selectedMarker = marker.id;
 	SIDEBAR.open("marker-details");
 }
 
-function addMarker(marker){
+function addMarker(marker) {
 	L.marker([marker.latitude, marker.longitude], {
 		id: marker.id,
 		title: marker.title,
@@ -104,7 +107,7 @@ fetch("/api/markers")
 ((/** @type {HTMLFormElement} */ form) => {
 	form.onsubmit = event => {
 		event.preventDefault();
-		fetch(form.action,{
+		fetch(form.action, {
 			method: "POST",
 			body: new FormData(form)
 		})
