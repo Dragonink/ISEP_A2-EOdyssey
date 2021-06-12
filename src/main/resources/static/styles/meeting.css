@@ -29,6 +29,12 @@ div.leaflet-sidebar-pane#meeting li.system {
 div.leaflet-sidebar-pane#meeting form {
 	flex: 0 0 auto;
 }
-div.leaflet-sidebar-pane#meeting form textarea {
-	resize: none;
+div.leaflet-sidebar-pane#meeting form>div {
+	display: flex;
+}
+div.leaflet-sidebar-pane#meeting form>div>button:not([type]) {
+	flex: 0 0 auto;
+}
+div.leaflet-sidebar-pane#meeting form>div>button[type="submit"] {
+	flex: 1 0 auto;
 }

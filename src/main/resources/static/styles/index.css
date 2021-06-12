@@ -32,7 +32,8 @@ input {
 	width: 97%;
 }
 
-textarea{
+textarea {
+	resize: none;
 	font-size: large;
 	width: 97%;
 }
@@ -81,4 +82,10 @@ output[form="search-form"]>ul>li>button {
 }
 output[form="search-form"]>ul>li>button:hover {
 	background-color: #8884;
+}
+
+.leaflet-sidebar-tabs>li.disabled,
+.leaflet-sidebar-tabs>ul>li.disabled {
+	opacity: .25;
+	color: inherit !important;
 }
