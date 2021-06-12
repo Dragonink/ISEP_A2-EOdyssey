@@ -1,19 +1,7 @@
 const MAP = L.map('map').setView([48.82461184925993, 2.279912667672016], 13);
-
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(MAP);
-
-MAP.on('contextmenu',
-	function (e) {
-		/** @type {HTMLFormElement} */
-		const form = document.querySelector("form#new-marker-form");
-		form.elements.namedItem("latitude").value = e.latlng.lat;
-		form.elements.namedItem("longitude").value = e.latlng.lng;
-		SIDEBAR.enablePanel("new-marker");
-		SIDEBAR.open("new-marker");
-	}
-);
 
 const SIDEBAR = L.control.sidebar({
 	container: 'sidebar',
@@ -71,60 +59,3 @@ fetch("/api/markers")
 	})
 	.then(markers => markers.forEach(marker => addMarker(marker)))
 	.catch(console.error);
-
-((/** @type {HTMLFormElement} */ form) => {
-	form.onsubmit = event => {
-		event.preventDefault();
-		fetch(`${form.action}?${new URLSearchParams({
-			query: form.elements.namedItem("query").value,
-		})}`)
-			.then(response => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw response;
-				}
-			})
-			.then(markers => {
-				/** @type {HTMLUListElement} */
-				const output = document.querySelector("output[form='search-form']>ul");
-				output.innerHTML = "";
-				markers.forEach(marker => {
-					const li = document.createElement("li");
-					const button = document.createElement("button");
-					button.textContent = marker.title;
-					button.onclick = _event => {
-						MAP.flyTo([marker.latitude, marker.longitude], 14);
-						displayMarkerDetails(marker);
-					};
-					li.appendChild(button);
-					output.appendChild(li);
-				});
-			})
-			.catch(console.error);
-	};
-})(document.querySelector("form#search-form"));
-
-((/** @type {HTMLFormElement} */ form) => {
-	form.onsubmit = event => {
-		event.preventDefault();
-		fetch(form.action, {
-			method: "POST",
-			body: new FormData(form)
-		})
-			.then(response => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw response;
-				}
-			})
-			.then(marker => {
-				addMarker(marker);
-				SIDEBAR.close("new-marker");
-				SIDEBAR.disablePanel("new-marker");
-				displayMarkerDetails(marker);
-			})
-			.catch(alert);
-	};
-})(document.querySelector("form#new-marker-form"));

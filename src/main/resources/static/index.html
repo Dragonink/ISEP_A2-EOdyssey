@@ -12,6 +12,8 @@
 	<script src="https://noerw.github.io/leaflet-sidebar-v2/js/leaflet-sidebar.min.js" crossorigin></script>
 	<script type="application/javascript" src="/scripts/authentication.js" defer></script>
 	<script type="application/javascript" src="/scripts/index.js" defer></script>
+	<script type="application/javascript" src="/scripts/search.js" defer></script>
+	<script type="application/javascript" src="/scripts/new-marker.js" defer></script>
 	<script type="application/javascript" src="/scripts/meeting.js" defer></script>
 </head>
 
@@ -48,29 +50,23 @@
 
 			<div class="leaflet-sidebar-pane" id="new-marker">
 				<form id="new-marker-form" method="POST" action="/api/markers">
-					<fieldset id="fieldset1">
-						<legend id="legend1"><b>Coordinates</b> </legend>
+					<fieldset>
+						<legend><b>Coordinates</b></legend>
 
 						<label for="latitude">Latitude: </label>
-						<input type="number" name="latitude" placeholder="latitude" readonly>
+						<input type="number" name="latitude" readonly />
 
 						<label for="longitude">Longitude: </label>
-						<input type="number" name="longitude" placeholder="longitude" readonly>
+						<input type="number" name="longitude" readonly />
 					</fieldset>
 
-					<fieldset id="fieldset1">
-						<legend id="legend1"><b>Information</b> </legend>
+					<fieldset>
+						<legend><b>Information</b></legend>
 
-						<div class="title">
-							<input type="text" placeholder="Title" name="title" required>
-						</div>
-
-						<br>
-
+						<input type="text" placeholder="Title" name="title" required />
 						<textarea name="content" placeholder="Description" spellcheck="true"></textarea>
 					</fieldset>
 
-					<br>
 					<button type="submit">Create marker</button>
 				</form>
 			</div>
