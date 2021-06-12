@@ -73,8 +73,6 @@ public class MeetingHandler extends TextWebSocketHandler {
 					Set<WebSocketSession> set = new HashSet<WebSocketSession>();
 					set.add(session);
 					rooms.put(marker.getId(), set);
-					marker.hasMeeting = true;
-					markerRepository.save(marker);
 				});
 			sessionMap.put(session.getId(), marker.getId());
 		});
@@ -101,11 +99,6 @@ public class MeetingHandler extends TextWebSocketHandler {
 			room.remove(session);
 			if (room.isEmpty()) {
 				long markerId = sessionMap.get(session.getId());
-				markerRepository.findById(markerId)
-					.ifPresent(marker -> {
-						marker.hasMeeting = false;
-						markerRepository.save(marker);
-					});
 				rooms.remove(markerId);
 			}
 		});

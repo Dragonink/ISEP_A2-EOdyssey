@@ -43,8 +43,7 @@
 					<p>Please select a marker to display its details here</p>
 				</article>
 
-				<button id="create-meeting" hidden>Create meeting</button>
-				<button id="join-meeting" hidden>Join meeting</button>
+				<button id="join-meeting">Join meeting</button>
 			</div>
 
 			<div class="leaflet-sidebar-pane" id="new-marker">
@@ -121,12 +120,14 @@
 			</div>
 
 			<div class="leaflet-sidebar-pane" id="meeting">
-				<ul></ul>
-				<hr />
-				<form id="send-message">
-					<textarea name="content" required></textarea>
-					<button type="submit">Send</button>
-				</form>
+				<div>
+					<ul></ul>
+					<form id="send-message">
+						<textarea name="content" required></textarea>
+						<button type="submit">Send</button>
+						<button>Disconnect</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

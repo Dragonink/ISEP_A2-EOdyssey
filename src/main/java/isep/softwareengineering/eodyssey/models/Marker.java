@@ -26,9 +26,6 @@ public class Marker {
 
 	public String content;
 
-	@Transient
-	public boolean hasMeeting = false;
-
 	Marker() {}
 	public Marker(String title, double latitude, double longitude, String content) {
 		this.title = title;

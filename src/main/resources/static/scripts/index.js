@@ -43,21 +43,9 @@ function displayMarkerDetails(marker) {
 			}
 		}
 	});
-	fetch("/api/markers/" + marker.id)
-		.then(response => {
-			if (response.ok) {
-				return response.json();
-			} else {
-				throw response;
-			}
-		})
-		.then(marker => {
-			document.querySelectorAll("div#marker-details>button").forEach((/** @type {HTMLButtonElement} */ button) => {
-				button.onclick = _event => openMeeting(marker.id);
-				button.hidden = (button.id === "create-meeting" && marker.hasMeeting) || (button.id === "join-meeting" && !marker.hasMeeting);
-			});
-		})
-		.catch(console.error);
+	/** @type {HTMLButtonElement} */
+	const button = document.querySelector("button#join-meeting");
+	button.onclick = _event => openMeeting(marker);
 	selectedMarker = marker.id;
 	SIDEBAR.open("marker-details");
 }
