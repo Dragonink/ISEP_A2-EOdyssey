@@ -21,10 +21,10 @@
 		<div class="leaflet-sidebar-tabs">
 			<ul role="tablist">
 				<li><a href="#search" role="tab">&#128269;</a></li>
-				<li><a href="#marker-details" role="tab" style="font-size: x-large;">&#128462;</a></li>
-				<li><a href="#new-marker" role="tab" style="font-size: x-large;">&#128463;</a></li>
+				<li><a href="#marker-details" role="tab" style="font-size: x-large;">&#128712;</a></li>
+				<li><a href="#new-marker" role="tab" style="padding: 5px 0;"><img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" height="30" /></a></li>
 				<li><a href="#user" role="tab" title="Profile">&#128100;</a></li>
-				<li><a href="#meeting" role="tab" title="Chat">C</a></li>
+				<li><a href="#meeting" role="tab" title="Meeting">&#128172;</a></li>
 			</ul>
 		</div>
 		<div class="leaflet-sidebar-content">
@@ -43,7 +43,7 @@
 					<p>Please select a marker to display its details here</p>
 				</article>
 
-				<button id="join-meeting">Join meeting</button>
+				<button id="join-meeting" hidden>Join meeting</button>
 			</div>
 
 			<div class="leaflet-sidebar-pane" id="new-marker">
@@ -124,8 +124,10 @@
 					<ul></ul>
 					<form id="send-message">
 						<textarea name="content" required></textarea>
-						<button type="submit">Send</button>
-						<button>Disconnect</button>
+						<div>
+							<button>Disconnect</button>
+							<button type="submit">Send</button>
+						</div>
 					</form>
 				</div>
 			</div>

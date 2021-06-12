@@ -46,6 +46,7 @@ function displayMarkerDetails(marker) {
 	/** @type {HTMLButtonElement} */
 	const button = document.querySelector("button#join-meeting");
 	button.onclick = _event => openMeeting(marker);
+	button.hidden = false;
 	selectedMarker = marker.id;
 	SIDEBAR.open("marker-details");
 }
