@@ -84,6 +84,13 @@ output[form="search-form"]>ul>li>button:hover {
 	background-color: #8884;
 }
 
+article>p {
+	width: 100%;
+}
+article>p img {
+	max-width: 100%;
+}
+
 .leaflet-sidebar-tabs>li.disabled,
 .leaflet-sidebar-tabs>ul>li.disabled {
 	opacity: .25;
